@@ -18,7 +18,7 @@ public class ModuloConexao {
         // a linha abaixo chama o drive
         String driver = "com.mysql.jdbc.Driver";
         // armaenando informações referentes ao banco
-        String url = "jdbc:mysql://localhost:3306/gos";
+        String url = "jdbc:mysql://localhost:3306/dbgos";
         String user = "root";
         String password = "";
         //estabelecendo a conexão com o banco
@@ -27,7 +27,7 @@ public class ModuloConexao {
             conexao = DriverManager.getConnection(url, user, password);
             return conexao;
         } catch (Exception e) {
-            //a linha abaio serve de apoio para esclarecer o erro
+            //a linha abaixo serve de apoio para esclarecer o erro
             //System.out.println(e);
             return null;
         }
