@@ -20,7 +20,7 @@ public class TelaLogin extends javax.swing.JFrame {
     ResultSet rs = null;
     
     public void logar() {
-        String sql = "select * from tbusuario where login = ? and senha = ?";
+        String sql = "select * from tbusuarios where login = ? and senha = ?";
         try {
             //as linhas baixo preparam a consulta ao banco em função
             //que foi digitado nas caixas de texto. O ? foi substituido pelo
@@ -149,7 +149,8 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
+        // Chamando o método logar
+        logar();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
