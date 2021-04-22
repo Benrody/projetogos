@@ -34,6 +34,9 @@ public class TelaLogin extends javax.swing.JFrame {
             if (rs.next()) {
                 TelaPrincipal principal = new TelaPrincipal();
                 principal.setVisible(true);
+                // o formulário fecha quando abrir o principal
+                this.dispose();
+                conexao.close();
             } else {
                 JOptionPane.showMessageDialog(null, "usuario e/ou senha inválido");
                 
@@ -140,7 +143,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(340, 180));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
