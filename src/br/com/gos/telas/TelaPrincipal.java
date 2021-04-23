@@ -5,6 +5,10 @@
  */
 package br.com.gos.telas;
 
+import java.text.DateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Breno
@@ -47,6 +51,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setTitle("GOS");
         setPreferredSize(new java.awt.Dimension(915, 523));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         Desktop.setPreferredSize(new java.awt.Dimension(640, 480));
 
@@ -110,6 +119,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         MenOpcSai.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         MenOpcSai.setText("Sair");
+        MenOpcSai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenOpcSaiActionPerformed(evt);
+            }
+        });
         MenOpc.add(MenOpcSai);
 
         Menu.add(MenOpc);
@@ -157,6 +171,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void MenCadUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenCadUsuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MenCadUsuActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // As linhas abaixo substituem a label lblData pela data atual do sistema ao inicializar o form
+        Date data = new Date();
+        DateFormat formatador = DateFormat.getDateInstance(DateFormat.SHORT);
+        //agora setar a variável para a data
+        lblData.setText(formatador.format(data));
+    }//GEN-LAST:event_formWindowActivated
+
+    private void MenOpcSaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenOpcSaiActionPerformed
+        // Exibe uma caixa de diálogo
+        int sair = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja sair?", "Atenção!", JOptionPane.YES_NO_OPTION);
+        if (sair == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_MenOpcSaiActionPerformed
 
     /**
      * @param args the command line arguments
