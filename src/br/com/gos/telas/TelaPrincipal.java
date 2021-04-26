@@ -40,7 +40,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         MenCadCli = new javax.swing.JMenuItem();
         MenCadOs = new javax.swing.JMenuItem();
         MenCadUsu = new javax.swing.JMenuItem();
-        MenRel = new javax.swing.JMenu();
+        menRel = new javax.swing.JMenu();
         MenRelSer = new javax.swing.JMenuItem();
         MenAju = new javax.swing.JMenu();
         MenAjuSob = new javax.swing.JMenuItem();
@@ -49,7 +49,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GOS");
-        setPreferredSize(new java.awt.Dimension(915, 523));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -100,14 +99,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         Menu.add(menCad);
 
-        MenRel.setText("Relatório");
-        MenRel.setEnabled(false);
+        menRel.setText("Relatório");
+        menRel.setEnabled(false);
 
         MenRelSer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
         MenRelSer.setText("Serviços");
-        MenRel.add(MenRelSer);
+        menRel.add(MenRelSer);
 
-        Menu.add(MenRel);
+        Menu.add(menRel);
 
         MenAju.setText("Ajuda");
 
@@ -245,12 +244,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public static javax.swing.JMenuItem MenCadUsu;
     private javax.swing.JMenu MenOpc;
     private javax.swing.JMenuItem MenOpcSai;
-    public static javax.swing.JMenu MenRel;
     private javax.swing.JMenuItem MenRelSer;
     private javax.swing.JMenuBar Menu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblData;
-    private javax.swing.JLabel lblUsuario;
+    public static javax.swing.JLabel lblUsuario;
     private javax.swing.JMenu menCad;
+    public static javax.swing.JMenu menRel;
     // End of variables declaration//GEN-END:variables
 }

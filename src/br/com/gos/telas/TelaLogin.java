@@ -7,6 +7,7 @@ package br.com.gos.telas;
 
 import java.sql.*;
 import br.com.gos.dal.ModuloConexao;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,7 +19,7 @@ public class TelaLogin extends javax.swing.JFrame {
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-    
+
     public void logar() {
         String sql = "select * from tbusuarios where login = ? and senha = ?";
         try {
@@ -32,16 +33,30 @@ public class TelaLogin extends javax.swing.JFrame {
             rs = pst.executeQuery();
             //se existir usuário e senha correspondente
             if (rs.next()) {
-                TelaPrincipal principal = new TelaPrincipal();
-                principal.setVisible(true);
-                // o formulário fecha quando abrir o principal
-                this.dispose();
+                //A liha abaixo obtem o conteúdo do campo perfil da tabela tbusuarios
+                String perfil = rs.getString(6);
+                //System.out.println(perfil);
+                // A estrutura abaixo faz o tratamento do perfil do usuario
+                if (perfil.equals("admin")) {
+                    TelaPrincipal principal = new TelaPrincipal();
+                    principal.setVisible(true);
+                    TelaPrincipal.menRel.setEnabled(true);
+                    TelaPrincipal.MenCadUsu.setEnabled(true);
+                    TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                    TelaPrincipal.lblUsuario.setForeground(Color.red);
+                    this.dispose();
+                }else{
+                    TelaPrincipal principal = new TelaPrincipal();
+                    principal.setVisible(true);
+                    TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                    this.dispose();
+                }
                 conexao.close();
             } else {
                 JOptionPane.showMessageDialog(null, "usuario e/ou senha inválido");
-                
+
             }
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -59,7 +74,7 @@ public class TelaLogin extends javax.swing.JFrame {
             lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gos/icones/dbok.png")));
         } else {
             lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gos/icones/dberror.png")));
-        }        
+        }
     }
 
     /**
