@@ -9,13 +9,48 @@ package br.com.gos.telas;
  *
  * @author Breno
  */
-public class TelaUsuario extends javax.swing.JInternalFrame {
+import java.sql.*;
+import br.com.gos.dal.ModuloConexao;
+import javax.swing.JOptionPane;
 
-    /**
-     * Creates new form telaUsuario
-     */
+public class TelaUsuario extends javax.swing.JInternalFrame {
+    //usando a variável conexão do dal
+    Connection conexao = null;
+    //criando variaveis especiais para conexão com bancod
+    //preparedStatment e Resultset são frameworks do pacote java.sql
+    // e servem para preparar e executar as instruções sql
+    PreparedStatement pst = null;
+    ResultSet rs = null;
     public TelaUsuario() {
         initComponents();
+        conexao = ModuloConexao.conector();
+    }
+    private void consultar(){
+        String sql = "select * from tbusuarios where iduser = ?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtUsuId.getText());
+            rs=pst.executeQuery();
+            //a linha abaixo é quando encontra um usuário correspondente
+            if (rs.next()) {
+                txtUsuNome.setText(rs.getString(2));
+                txtUsuFone.setText(rs.getString(3));
+                txtUsuLogin.setText(rs.getString(4));
+                txtUsuSenha.setText(rs.getString(5));
+                //a linha abaixo se refere ao combo box
+                cboUsuPerfil.setSelectedItem(rs.getString(6));
+            } else {
+            JOptionPane.showMessageDialog(null, "Usuário não cadastrado");
+            //as linhas abaixo "limpam" os campos
+            txtUsuNome.setText(null);
+            txtUsuFone.setText(null);
+            txtUsuLogin.setText(null);
+            txtUsuSenha.setText(null);
+            cboUsuPerfil.setSelectedItem(null);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     /**
@@ -66,7 +101,6 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
         btnUsuCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gos/icones/create.png"))); // NOI18N
         btnUsuCreate.setToolTipText("Adicionar");
-        btnUsuCreate.setActionCommand("");
         btnUsuCreate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUsuCreate.setPreferredSize(new java.awt.Dimension(80, 80));
 
@@ -74,6 +108,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         btnUsuRead.setToolTipText("Consultar");
         btnUsuRead.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUsuRead.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnUsuRead.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuReadActionPerformed(evt);
+            }
+        });
 
         btnUsuUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gos/icones/update.png"))); // NOI18N
         btnUsuUpdate.setToolTipText("Alterar");
@@ -168,6 +207,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
         setBounds(0, 0, 640, 480);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnUsuReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuReadActionPerformed
+        // Chamando o método consultar
+        consultar();
+    }//GEN-LAST:event_btnUsuReadActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
