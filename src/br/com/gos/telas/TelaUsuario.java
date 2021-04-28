@@ -28,6 +28,9 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     private void consultar(){
         String sql = "select * from tbusuarios where iduser = ?";
         try {
+            //a linha abaixo procura no banco o nome de usuário.
+            //caso queira mudar para pesquisar por id é só
+            //modificar para  pst.setString(1, txtUsuId.getText());
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtUsuId.getText());
             rs=pst.executeQuery();
