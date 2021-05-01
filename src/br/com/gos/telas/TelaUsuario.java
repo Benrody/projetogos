@@ -25,12 +25,14 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         initComponents();
         conexao = ModuloConexao.conector();
     }
+    
+    //método para consultar usuários
     private void consultar(){
         String sql = "select * from tbusuarios where iduser = ?";
         try {
             //a linha abaixo procura no banco o nome de usuário.
-            //caso queira mudar para pesquisar por id é só
-            //modificar para  pst.setString(1, txtUsuId.getText());
+            //caso queira mudar para pesquisar por nome é só
+            //modificar para  pst.setString(1, txtUsuNome.getText());
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtUsuId.getText());
             rs=pst.executeQuery();
@@ -51,6 +53,24 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             txtUsuSenha.setText(null);
             cboUsuPerfil.setSelectedItem(null);
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    //método para adicionar usuários
+    private void adicionar(){
+        //instrução sql que será responsavel por inserir os dados na tabela usuários
+        String sql = "insert into tbusuarios(iduser,usuario,fone,login,senha,perfil)values(?,?,?,?,?,?)";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtUsuId.getText());
+            pst.setString(2, txtUsuNome.getText());
+            pst.setString(3, txtUsuFone.getText());
+            pst.setString(4, txtUsuLogin.getText());
+            pst.setString(5, txtUsuSenha.getText());
+            pst.setString(6, cboUsuPerfil.getSelectedItem().toString());
+            //a linha abaixo atualiza a tabela usuários com os dados do formulário
+            pst.executeUpdate();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -106,6 +126,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         btnUsuCreate.setToolTipText("Adicionar");
         btnUsuCreate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUsuCreate.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnUsuCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuCreateActionPerformed(evt);
+            }
+        });
 
         btnUsuRead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gos/icones/read.png"))); // NOI18N
         btnUsuRead.setToolTipText("Consultar");
@@ -215,6 +240,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         // Chamando o método consultar
         consultar();
     }//GEN-LAST:event_btnUsuReadActionPerformed
+
+    private void btnUsuCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuCreateActionPerformed
+        // Chamando o método adicionar
+        adicionar();
+    }//GEN-LAST:event_btnUsuCreateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
