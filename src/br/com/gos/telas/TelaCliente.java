@@ -4,19 +4,22 @@
  * and open the template in the editor.
  */
 package br.com.gos.telas;
+
 import java.sql.*;
 import br.com.gos.dal.ModuloConexao;
 import javax.swing.JOptionPane;
+//a linha abaixo impoorta recursos na biblioteca rs2xml.jar
+import net.proteanit.sql.DbUtils;
 
 /**
  *
  * @author Breno
  */
 public class TelaCliente extends javax.swing.JInternalFrame {
-    Connection  conexao = null;
+
+    Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-    
 
     /**
      * Creates new form TelaCliente
@@ -37,14 +40,14 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             pst.setString(3, txtCliFone.getText());
             pst.setString(4, txtCliEmail.getText());
             //validação dos campos obrigatórios 
-            if ((txtCliNome.getText().isEmpty())|| (txtCliFone.getText().isEmpty())){
+            if ((txtCliNome.getText().isEmpty()) || (txtCliFone.getText().isEmpty())) {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios");
             } else {
 
-            //a linha abaixo atualiza a tabela usuários com os dados do formulário
+                //a linha abaixo atualiza a tabela usuários com os dados do formulário
                 //a estrutura abaixo é usada para confirmar a inserção dos dados na tabela
                 int adicionado = pst.executeUpdate();
-            //essa linha mostra que foi add uma linha no banco de dados
+                //essa linha mostra que foi add uma linha no banco de dados
                 //System.out.println(adicionado);
                 if (adicionado > 0) {
                     JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso");
@@ -59,6 +62,27 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+
+    //método para pesquisar cliente pelo nome com filtro
+    private void pesquisar_cliente() {
+        String sql
+                = "select * from tbclientes where nomecli like ?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            //passando o conteúdo da caixa de pesquisa para o ?
+            //lembrar que a % é a continuação da String sql
+            pst.setString(1, txtCliPesquisar.getText()+"%");
+            rs = pst.executeQuery();
+            //a linha abaixo usa a biblioteca rs2xml.jar para preencher a tabela
+            tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
+            
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,7 +103,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblClientes = new javax.swing.JTable();
-        txyCliPesquisar = new javax.swing.JTextField();
+        txtCliPesquisar = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         btnAdicionar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
@@ -119,6 +143,12 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             }
         ));
         jScrollPane1.setViewportView(tblClientes);
+
+        txtCliPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCliPesquisarKeyReleased(evt);
+            }
+        });
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/gos/icones/newIconLupa.png"))); // NOI18N
 
@@ -173,7 +203,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                                                 .addComponent(txtCliEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(txyCliPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCliPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel6)))))
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -184,7 +214,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                 .addComponent(jLabel5)
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txyCliPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCliPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -224,6 +254,11 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         // Método para adicionar Clientes
         adicionar();
     }//GEN-LAST:event_btnAdicionarActionPerformed
+        //o evento abaixo é do tipo "enquanto for digitando"
+    private void txtCliPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCliPesquisarKeyReleased
+        //chamar o método pesquisar clientes
+        pesquisar_cliente();
+    }//GEN-LAST:event_txtCliPesquisarKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -242,6 +277,6 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCliEndereco;
     private javax.swing.JTextField txtCliFone;
     private javax.swing.JTextField txtCliNome;
-    private javax.swing.JTextField txyCliPesquisar;
+    private javax.swing.JTextField txtCliPesquisar;
     // End of variables declaration//GEN-END:variables
 }
