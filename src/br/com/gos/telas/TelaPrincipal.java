@@ -274,19 +274,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void MenRelSerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenRelSerActionPerformed
  //gerando um relatório de clientes
-        int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão deste relatório?", "Atenção!", JOptionPane.YES_NO_OPTION);
-        if (confirma == JOptionPane.YES_OPTION) {
-            //emitindo o relatório de serviços
-            try {
-                //sando a classe jasperPrint apra preparar a impressão de um relatório
-                JasperPrint print = JasperFillManager.fillReport("C:/reports/servicos.jasper", null, conexao);
-                //a linha abaixo exibe o relatório através da classe JasperViewer
-                JasperViewer.viewReport(print, false);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
+            int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão deste relatório?", "Atenção!", JOptionPane.YES_NO_OPTION);
+            if (confirma == JOptionPane.YES_OPTION) {
+                //emitindo o relatório de serviços
+                try {
+                    //sando a classe jasperPrint apra preparar a impressão de um relatório
+                    JasperPrint print = JasperFillManager.fillReport("C:/reports/servicos.jasper", null, conexao);
+                    //a linha abaixo exibe o relatório através da classe JasperViewer
+                    JasperViewer.viewReport(print, false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+
             }
-            
-        }
     }//GEN-LAST:event_MenRelSerActionPerformed
 
     /**
