@@ -59,7 +59,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                 //essa linha mostra que foi add uma linha no banco de dados
                 //System.out.println(adicionado);
                 if (adicionado > 0) {
-                    JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso");
+                    JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso!");
                     txtCliNome.setText(null);
                     txtCliEndereco.setText(null);
                     txtCliFone.setText(null);
@@ -115,7 +115,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             pst.setString(4, txtCliEmail.getText());
             pst.setString(5, txtCliId.getText());
             if ((txtCliNome.getText().isEmpty()) || (txtCliFone.getText().isEmpty())) {
-                JOptionPane.showMessageDialog(null, "preencha todos os campos obrigatórios");
+                JOptionPane.showMessageDialog(null, "preencha todos os campos obrigatórios!");
             } else {
 
                 //a linha abaixo atualiza a tabela usuários com os dados do formulário
